@@ -25,6 +25,15 @@ require_once('config.php');
 //$user->login('user1', '1234');
 //echo $user;
 
-$user = new Usuario("user5", "666");
-$user->insert();
+// Inserir um usuário
+//$user = new Usuario("user5", "666");
+//$user->insert();
+//echo $user;
+
+// Alterar um usuário
+$user = new Usuario();
+$user->loadById('5');
+$user->setTxtLogin('user5');
+$user->setTxtSenha('42');
+$user->update();
 echo $user;

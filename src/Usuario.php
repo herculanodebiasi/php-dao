@@ -115,6 +115,16 @@ class Usuario
         }
     }
 
+    public function update()
+    {
+        $sql = new Sql();
+        $sql->query("UPDATE tb_usuarios SET txt_login=:LOGIN, txt_senha=:SENHA WHERE id_usuario=:ID", array(
+            ":LOGIN" => $this->getTxtLogin(),
+            ":SENHA" => $this->getTxtSenha(),
+            ":ID" => $this->getIdUsuario()
+        ));
+    }
+
     public function __toString()
     {
         return json_encode(array(
