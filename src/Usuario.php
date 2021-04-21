@@ -7,6 +7,12 @@ class Usuario
     private $txt_senha;
     private $dt_cadastro;
 
+    public function __construct($login = "", $senha = "")
+    {
+        $this->setTxtLogin($login);
+        $this->setTxtSenha($senha);
+    }
+
     public function getIdUsuario()
     {
         return $this->id_usuario;
@@ -55,11 +61,7 @@ class Usuario
         ));
 
         if (count($resultados) > 0) {
-            $reg = $resultados[0];
-            $this->setIdUsuario($reg['id_usuario']);
-            $this->setTxtLogin($reg['txt_login']);
-            $this->setTxtSenha($reg['txt_senha']);
-            $this->setDtCadastro(new DateTime($reg['dt_cadastro']));
+            $this->defineDados($resultados[0]);
         }
     }
 
@@ -86,17 +88,35 @@ class Usuario
         ));
 
         if (count($resultados) > 0) {
-            $reg = $resultados[0];
-            $this->setIdUsuario($reg['id_usuario']);
-            $this->setTxtLogin($reg['txt_login']);
-            $this->setTxtSenha($reg['txt_senha']);
-            $this->setDtCadastro(new DateTime($reg['dt_cadastro']));
+            $this->defineDados($resultados[0]);
         } else {
             throw new Exception("Login e/ou senha inválidos!");
         }
     }
 
-    public function __toString() {
+    public function defineDados($dados)
+    {
+        $this->setIdUsuario($dados['id_usuario']);
+        $this->setTxtLogin($dados['txt_login']);
+        $this->setTxtSenha($dados['txt_senha']);
+        $this->setDtCadastro(new DateTime($dados['dt_cadastro']));
+    }
+
+    public function insert()
+    {
+        $sql = new Sql();
+        $resultados = $sql->select("CALL sp_usuarios_insert(:LOGIN, :SENHA)", array(
+            ":LOGIN" => $this->getTxtLogin(),
+            ":SENHA" => $this->getTxtSenha()
+        ));
+
+        if (count($resultados) > 0) {
+            $this->defineDados($resultados[0]);
+        }
+    }
+
+    public function __toString()
+    {
         return json_encode(array(
             "id_usuario" => $this->getIdUsuario(),
             "txt_login" => $this->getTxtLogin(),

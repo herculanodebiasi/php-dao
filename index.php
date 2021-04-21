@@ -21,6 +21,10 @@ require_once('config.php');
 //echo json_encode($lista);
 
 // Carrega um usuário usando o login e a senha
-$user = new Usuario();
-$user->login('user1', '1234');
+//$user = new Usuario();
+//$user->login('user1', '1234');
+//echo $user;
+
+$user = new Usuario("user5", "666");
+$user->insert();
 echo $user;
