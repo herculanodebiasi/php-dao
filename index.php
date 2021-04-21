@@ -31,9 +31,15 @@ require_once('config.php');
 //echo $user;
 
 // Alterar um usuário
+//$user = new Usuario();
+//$user->loadById(5);
+//$user->setTxtLogin('user5');
+//$user->setTxtSenha('42');
+//$user->update();
+//echo $user;
+
+// Excluir um usuário
 $user = new Usuario();
-$user->loadById('5');
-$user->setTxtLogin('user5');
-$user->setTxtSenha('42');
-$user->update();
+$user->loadById(5);
+$user->delete();
 echo $user;
